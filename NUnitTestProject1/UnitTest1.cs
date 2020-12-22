@@ -30,7 +30,7 @@ namespace NUnitTestProject1
             homePage.goToGoogle();
             homePage.typeTextToSearchField("Selenium IDE export to C#");
             homePage.pressBtnSearch();
-            resultsPage.searchTextOnResults();
+            resultsPage.searchTextOnResults("Selenium IDE");
         }
 
         [TearDown]

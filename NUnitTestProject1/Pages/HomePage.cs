@@ -13,6 +13,8 @@ namespace NUnitTestProject1.Pages
         public HomePage(IWebDriver driver)
         {
             this.driver = driver;
+            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
+            actions = new Actions(driver);
         }
 
         IWebElement inputSearch => driver.FindElement(By.Name("q"));
@@ -24,18 +26,12 @@ namespace NUnitTestProject1.Pages
         }
         public void typeTextToSearchField(String Querie)
         {
-            // По-хорошему было бы не плохо юзать ожидания, вынесенные в экшенсы, но я словил NullReferenceException. Видимо, где-то что-то не инициализировал, судя по всему wait в Actions.
-            //actions.insertText(inputSearch, Querie);
-
-            //Менее красивый вариант - писать явные ожидания тут.
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
-            wait.Until(ExpectedConditions.ElementToBeClickable(inputSearch)).SendKeys(Querie);
+            actions.insertText(inputSearch, Querie);
         }
 
         public void pressBtnSearch()
         {
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
-            wait.Until(ExpectedConditions.ElementToBeClickable(btnSearch)).Click();
+            actions.click(btnSearch);
         }
     }
 }

@@ -16,21 +16,19 @@ namespace NUnitTestProject1.Pages
         public ResultsPage(IWebDriver driver)
         {
             this.driver = driver;
+            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
+            actions = new Actions(driver);
         }
 
-        //[FindsBy(How = How.CssSelector, Using = ".//*[@id='rso']/div[4]/div/div/a/h3/span")]
-        //IWebElement searchResult;
         IWebElement searchResult => driver.FindElement(By.XPath(".//*[@id='rso']/div[4]/div/div/a/h3/span"));
 
 
-        public void searchTextOnResults()
+        public void searchTextOnResults(String expectedText)
         {
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
 
-            //Arrange
-            String expectedText = "Selenium IDE";
-            //Act
             String actualText;
+
             if (driver.FindElements(By.XPath(".//*[@id='rso']/div[4]/div/div/a/h3/span")).Count > 0)
             {
                 actualText = wait.Until(ExpectedConditions.ElementToBeClickable(searchResult)).Text;
@@ -45,10 +43,9 @@ namespace NUnitTestProject1.Pages
             }
             else
             {
-                actualText = wait.Until(ExpectedConditions.ElementToBeClickable(searchResult)).Text;
+                actualText = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(".//*[@id='rso']/div[3]/span/div/div/a/span/h3/span"))).Text;
             }
 
-            //Assert
             Assert.IsTrue(actualText.Contains(expectedText));
         }
     }

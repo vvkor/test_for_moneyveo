@@ -9,11 +9,12 @@ namespace NUnitTestProject1
 {
     public class Actions
     {
+        IWebDriver driver;
         WebDriverWait wait;
         public Actions(IWebDriver driver)
         {
-            //Почему-то не получается инициализировать wait
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
+            this.driver = driver;
+            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
         }
 
         public void waitToBeClickable(IWebElement element)
